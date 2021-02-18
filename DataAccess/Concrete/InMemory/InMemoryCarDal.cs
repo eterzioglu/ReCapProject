@@ -2,17 +2,17 @@
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 
 namespace DataAccess.Concrete.InMemory
 {
-    public class InMemoryDal : ICarDal
+    public class InMemoryCarDal :ICarDal
     {
         List<Car> _cars;
 
-        public InMemoryDal()
+        public InMemoryCarDal()
         {
             _cars = new List<Car>()
             {
@@ -35,7 +35,7 @@ namespace DataAccess.Concrete.InMemory
 
         public Car Get(Expression<Func<Car, bool>> filter)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
