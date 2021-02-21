@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    class BrandManager : IBrandService
+    public class BrandManager : IBrandService
     {
         IBrandDal _brandDal;
 
@@ -17,14 +17,29 @@ namespace Business.Concrete
             _brandDal = brandDal;
         }
 
-        public Brand Get(Expression<Func<Brand, bool>> filter = null)
+        public void Add(Brand brand)
         {
-            return _brandDal.Get(filter);
+            _brandDal.Add(brand);
+        }
+
+        public void Delete(Brand brand)
+        {
+            _brandDal.Delete(brand);
+        }
+
+        public Brand GetById(int brandId)
+        {
+            return _brandDal.Get(b => b.BrandId == brandId);
         }
 
         public List<Brand> GetAll()
         {
             return _brandDal.GetAll();
+        }
+
+        public void Update(Brand brand)
+        {
+            _brandDal.Update(brand);
         }
     }
 }

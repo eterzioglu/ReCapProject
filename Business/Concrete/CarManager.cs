@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -39,13 +40,24 @@ namespace Business.Concrete
             }
         }
 
-        public List<Car> GetCarsByBrandId(int id)
+        public void Update(Car car)
         {
-            return _carDal.GetAll(c => c.BrandId == id);
+            _carDal.Update(car);
         }
-        public List<Car> GetCarsByColorId(int id)
+
+        public void Delete(Car car)
         {
-            return _carDal.GetAll(c => c.ColorId == id);
+            _carDal.Delete(car);
+        }
+
+        public Car GetById(int id)
+        {
+            return _carDal.Get(c => c.Id == id);
+        }
+
+        public List<CarDetailsDto> GetCarDetails()
+        {
+           return _carDal.GetCarDetails();
         }
     }
 }
