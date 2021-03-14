@@ -8,6 +8,8 @@ using System.Text;
 using System.Linq;
 using Entities.DTOs;
 using Core.Utilities.Results;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 
 namespace Business.Concrete
 {
@@ -25,20 +27,11 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
         
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            using(CarDatabaseContext context = new CarDatabaseContext())
-            {
-                if(car.DailyPrice > 0 && context.Brands.SingleOrDefault(b=>b.BrandId == car.BrandId).BrandName.Length > 2)
-                {
-                    _carDal.Add(car);
-                    return new SuccessResult("Car added database succesfully");
-                }
-                else
-                {
-                    return new ErrorResult("System error. Car couldn't added the database");
-                }
-            }
+            _carDal.Add(car);
+            return new SuccessResult("Car added database succesfully");
         }
 
         public IResult Update(Car car)
