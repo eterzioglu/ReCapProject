@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -21,12 +22,12 @@ namespace Business.Concrete
         {
             if (_rentalDal.Get(r => r.CarId == rental.CarId).ReturnDate == null)
             {
-                return new ErrorResult("Rental operation failed.");
+                return new ErrorResult(Messages.RentalOperationFailed);
             }
             else
             {
                 _rentalDal.Add(rental);
-                return new SuccessResult("Rental operation succed.");
+                return new SuccessResult(Messages.RentalOperationSuccedd);
             }
         }
 

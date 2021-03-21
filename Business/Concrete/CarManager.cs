@@ -11,6 +11,7 @@ using Core.Utilities.Results;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Business.BusinessAspects.Autofac;
+using Business.Constants;
 
 namespace Business.Concrete
 {
@@ -33,19 +34,19 @@ namespace Business.Concrete
         public IResult Add(Car car)
         {
             _carDal.Add(car);
-            return new SuccessResult("Car added database succesfully");
+            return new SuccessResult(Messages.AddedSuccessfully);
         }
 
         public IResult Update(Car car)
         {
             _carDal.Update(car);
-            return new SuccessResult("Car updated succesfully");
+            return new SuccessResult(Messages.UpdatedSuccessfully);
         }
 
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
-            return new SuccessResult("Car deleted succesfully");
+            return new SuccessResult(Messages.DeletedSuccessfully);
         }
 
         public IDataResult<Car> GetById(int id)

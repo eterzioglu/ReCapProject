@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
@@ -24,13 +25,13 @@ namespace Business.Concrete
         public IResult Add(CarImage car)
         {
             _carImageDal.Add(car);
-            return new SuccessResult();
+            return new SuccessResult(Messages.AddedSuccessfully);
         }
 
         public IResult Delete(CarImage car)
         {
             _carImageDal.Delete(car);
-            return new SuccessResult();
+            return new SuccessResult(Messages.DeletedSuccessfully);
         }
 
         public IDataResult<List<CarImage>> GetAll()
@@ -47,7 +48,7 @@ namespace Business.Concrete
         public IResult Update(CarImage car)
         {
             _carImageDal.Update(car);
-            return new SuccessResult();
+            return new SuccessResult(Messages.UpdatedSuccessfully);
         }
     }
 }

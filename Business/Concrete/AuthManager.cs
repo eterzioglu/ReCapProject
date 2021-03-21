@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
@@ -25,7 +26,7 @@ namespace Business.Concrete
         {
             var claims = _userService.GetClaims(user);
             var accessToken = _tokenHelper.CreateToken(user, claims);
-            return new SuccessDataResult<AccessToken>(accessToken,"Access Token başarı ile oluşturuldu.");
+            return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
@@ -33,13 +34,13 @@ namespace Business.Concrete
             var userToCheck = _userService.GetByMail(userForLoginDto.Email);
             if(userToCheck == null)
             {
-                return new ErrorDataResult<User>("Kullanıcı bulunamadı.");
+                return new ErrorDataResult<User>(Messages.UserNotFound);
             }
             if(!HashingHelper.VerifyPasswordHash(userForLoginDto.Password,userToCheck.PasswordHash,userToCheck.PasswordSalt))
             {
-                return new ErrorDataResult<User>("Şifre hatalı.");
+                return new ErrorDataResult<User>(Messages.PasswordIncorrect);
             }
-            return new SuccessDataResult<User>(userToCheck, "Giriş başarılı.");
+            return new SuccessDataResult<User>(userToCheck, Messages.SuccessfullLogin);
         }
 
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
@@ -56,14 +57,14 @@ namespace Business.Concrete
                 Status = true
             };
             _userService.Add(user);
-            return new SuccessDataResult<User>(user, "Kullanıcı başarı ile kayıt edildi.");
+            return new SuccessDataResult<User>(user, Messages.UserRegisteredSuccessfully);
         }
 
         public IResult UserExist(string email)
         {
             if(_userService.GetByMail(email) != null)
             {
-                return new ErrorResult("Kullanıcı mevcut");
+                return new ErrorResult(Messages.UserExist);
             }
             return new SuccessResult();
         }

@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -20,18 +21,18 @@ namespace Business.Concrete
         public IResult Add(Customer customer)
         {
             _customerDal.Add(customer);
-            return new SuccessResult("Customer added successfully");
+            return new SuccessResult(Messages.AddedSuccessfully);
         }
 
         public IResult Delete(Customer customer)
         {
             _customerDal.Delete(customer);
-            return new SuccessResult("Customer deleted successfully");
+            return new SuccessResult(Messages.DeletedSuccessfully);
         }
 
         public IDataResult<List<Customer>> GetAll()
         {
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), "Customers listed successfully");
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.ListedSuccessfully);
         }
 
         public IDataResult<Customer> GetById(int customerId)
@@ -42,7 +43,7 @@ namespace Business.Concrete
         public IResult Update(Customer customer)
         {
             _customerDal.Update(customer);
-            return new SuccessResult("Customer updated successfully");
+            return new SuccessResult(Messages.UpdatedSuccessfully);
         }
     }
 }
