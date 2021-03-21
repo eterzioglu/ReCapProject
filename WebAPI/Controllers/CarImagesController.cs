@@ -1,29 +1,28 @@
-﻿using Business.Abstract;
-using Entities.Concrete;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Business.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities.Concrete;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class CarImagesController : ControllerBase
     {
-        IUserService _userService;
+        ICarImageService _carImageService;
 
-        public UsersController(IUserService userService)
+        public CarImagesController(ICarImageService carImageService)
         {
-            _userService = userService;
+            _carImageService = carImageService;
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            var result = _userService.GetAll();
+            var result = _carImageService.GetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -32,9 +31,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getbyid")]
-        public IActionResult GetById(int userId)
+        public IActionResult GetById(int imageId)
         {
-            var result = _userService.GetById(userId);
+            var result = _carImageService.GetById(imageId);
             if (result.Success)
             {
                 return Ok(result);
@@ -43,9 +42,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(User user)
+        public IActionResult Add(CarImage carImage)
         {
-            var result = _userService.Add(user);
+            var result = _carImageService.Add(carImage);
 
             if (result.Success)
             {
@@ -55,9 +54,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(User user)
+        public IActionResult Delete(CarImage carImage)
         {
-            var result = _userService.Delete(user);
+            var result = _carImageService.Delete(carImage);
 
             if (result.Success)
             {
@@ -67,9 +66,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update(User user)
+        public IActionResult Update(CarImage carImage)
         {
-            var result = _userService.Update(user);
+            var result = _carImageService.Update(carImage);
 
             if (result.Success)
             {

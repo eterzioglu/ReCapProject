@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -43,6 +44,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
+        [Authorize()]
         public IActionResult Add(Car car)
         {
             var result = _carService.Add(car);
