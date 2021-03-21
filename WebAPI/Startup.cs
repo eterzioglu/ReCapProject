@@ -18,6 +18,10 @@ using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using Core.Utilities.Security.JWT;
 using Core.Utilities.Security.Encryption;
+using Microsoft.AspNetCore.Http;
+using Core.Extensions;
+using Core.Utilities.IoC;
+using Core.DependencyResolver;
 
 namespace WebAPI
 {
@@ -34,11 +38,8 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowOrigin",
-                    builder => builder.WithOrigins("http://localhost:3000"));
-            });
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
@@ -55,6 +56,10 @@ namespace WebAPI
                     IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                 };
             });
+
+            services.AddDependencyResolvers(new ICoreModule[]{
+                new CoreModule()
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,8 +69,6 @@ namespace WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseCors(ApplicationBuilder => ApplicationBuilder.WithOrigins("http://localhost:3000").AllowAnyHeader());
 
             app.UseHttpsRedirection();
 

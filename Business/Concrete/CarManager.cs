@@ -10,6 +10,7 @@ using Entities.DTOs;
 using Core.Utilities.Results;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Business.BusinessAspects.Autofac;
 
 namespace Business.Concrete
 {
@@ -27,6 +28,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
         
+        [SecuredOperation("admin")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
